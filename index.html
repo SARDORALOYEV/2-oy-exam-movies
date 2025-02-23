@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    .forhover:hover{
+        position: relative;
+        z-index: 999;
+        cursor: pointer;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        color: white;
+        font-weight: bold;
+        background-color: black;
+        border-radius: 5px;
+    }
+    .forhover{
+        transition: 0.3s ease-in-out;
+    }
+    #sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #2d3748;
+    padding: 16px;
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    transform: translateX(100%);
+}
+
+#sidebar.open {
+    transform: translateX(0);
+}
+
+#saved-movie-list {
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.saved-movie-card {
+    background-color: #4a5568;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.saved-movie-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.delete-btn {
+    margin-top: 5px;
+    background-color: #e53e3e;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c53030;
+}
+
+.animated-border {
+    position: relative;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #16a34a; /* Yashil tugma */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.animated-border::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    border-radius: 10px;
+    background: linear-gradient(45deg, red, blue, green, yellow, red);
+    background-size: 300% 300%;
+    animation: rotate-border 3s linear infinite;
+}
+
+</style>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6 ">🎬 Movie Library</h1>
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <input type="text" id="search" placeholder="Enter movie name" class="p-2 border border-gray-700 rounded bg-gray-800 text-white">
+            
+            <select id="genre-filter" class="p-2 border border-gray-700 rounded bg-gray-800 text-white">
+                <option value="all">All</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Horror">Horror</option>
+                <option value="Drama">Drama</option>
+            </select>
+
+            <select id="sort-filter" class="p-2 border border-gray-700 rounded bg-gray-800 text-white">
+                <option value="default">Sort</option>
+                <option value="year">Sort by Year</option>
+                <option value="rating">Sort by Rating</option>
+            </select>
+
+            <button onclick="filterMovies()" class="animated-border p-2 bg-blue-600 hover:bg-blue-700 rounded text-white">Search</button>
+            <button onclick="toggleSidebar()" class="animated-border p-2 bg-green-600 hover:bg-green-700 rounded text-white">Saved Movies</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="movie-list"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed right-0 top-0 w-64 h-full bg-gray-800 p-4 transform translate-x-full transition-transform">
+        <button onclick="toggleSidebar()" class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded">X</button>
+        <h2 class="text-xl font-bold mb-4">Saved Movies</h2>
+        <div id="saved-movie-list"></div>
+    </div>
+
+    <script src="movies.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
